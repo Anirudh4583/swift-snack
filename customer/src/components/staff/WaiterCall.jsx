@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { db } from '../../services/Firebase'
 import { collection, getDocs } from 'firebase/firestore'
@@ -32,7 +32,7 @@ const listHead = {
   fontWeight: 'bold',
 }
 function WaiterCall() {
-  const [calls,setCalls] = useState([])
+  const [calls, setCalls] = useState([])
   useEffect(() => {
     async function main() {
       const querySnapshot = await getDocs(collection(db, 'calls'))
@@ -46,14 +46,7 @@ function WaiterCall() {
 
     main()
   }, [])
-  function convertTime(fullTime){
-    console.log(Date(fullTime * 1000))
-    const time = Date(fullTime).toLocaleString([], {
-      hour: '2-digit',
-      minute: '2-digit',
-    })
-    return time;
-  }
+
   return (
     <div>
       <h1 style={brandHead}>
@@ -64,23 +57,30 @@ function WaiterCall() {
       </h1>
 
       <h2 style={orderHead}>Call of Service</h2>
-      {calls.map((call) => (
-        <div>
-          <ul style={listOut}>
-            <li>
-              <div style={listHead}>
-                Table: {call.table}
-                <AiOutlineCheckSquare />
-              </div>
+      {calls.map((call, index) => {
+        console.log(call)
+        return (
+          <div key={index}>
+            <ul style={listOut}>
+              <li>
+                <div style={listHead}>
+                  Table: {call.table}
+                  <AiOutlineCheckSquare />
+                </div>
 
-              <div style={timeLine}>
-                <span>Time:</span>
-                <span>{convertTime(call.timestamp)}</span>
-              </div>
-            </li>
-          </ul>
-        </div>
-      ))}
+                <div style={timeLine}>
+                  <span>Time:</span>
+                  <span>
+                    {new Date(
+                      call.timestamp.seconds * 1000
+                    ).toLocaleDateString()}
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        )
+      })}
     </div>
   )
 }

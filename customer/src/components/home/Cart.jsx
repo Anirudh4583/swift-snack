@@ -1,6 +1,6 @@
 import Navbar from '../Navbar'
 import { Link, useHistory } from 'react-router-dom'
-import { collection, addDoc } from 'firebase/firestore'
+import { collection, addDoc, Timestamp } from 'firebase/firestore'
 import {
   Container,
   Title,
@@ -15,7 +15,7 @@ import {
   Bottom,
   TableNumber,
 } from '../../styles/cart.styles'
-import { getCartItems } from '../../services/Localstorage'
+import { clearCart, getCartItems } from '../../services/Localstorage'
 import { db } from '../../services/Firebase'
 
 function calculateTotalPrice(cartItems) {
@@ -37,11 +37,16 @@ const Cart = () => {
   async function handleOrder() {
     // console.log('place order btn')
     try {
-      await addDoc(collection(db, 'orders'), { table: 21, dishes: [...cart] })
+      await addDoc(collection(db, 'orders'), {
+        table: 21,
+        timestamp: Timestamp.fromDate(new Date()),
+        dishes: [...cart],
+      })
     } catch (e) {
       console.error('Error adding document: ', e)
     }
     history.push('/order-successful')
+    clearCart()
   }
 
   return (

@@ -35,7 +35,6 @@ const listHead = {
 }
 function OrderList() {
   const [orders, setOrders] = useState([])
-  const [dishes, setDishes] = useState([])
 
   useEffect(() => {
     async function main() {
@@ -55,13 +54,6 @@ function OrderList() {
   //   if (typeof order[i].dishes != 'undefined')
   //     console.log('The subject Name=' + order[i].dishes)
   // })
-  function convertTime(fullTime) {
-    const time = new Date().toLocaleString(fullTime, {
-      hour: '2-digit',
-      minute: '2-digit',
-    })
-    return time
-  }
 
   return (
     <div>
@@ -87,7 +79,13 @@ function OrderList() {
             </ul>
             <div style={timeLine}>
               <span>Time:</span>
-              <span>{convertTime(order.timestamp)}</span>
+              <span>
+                {(
+                  order?.timestamp.seconds / 60 / 60 +
+                  ' : ' +
+                  order?.timestamp.seconds / 60
+                ).toString()}
+              </span>
             </div>
           </li>
         </ul>

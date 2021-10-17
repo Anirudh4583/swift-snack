@@ -15,7 +15,7 @@ import {
   btn,
 } from '../styles/navbar.styles'
 import { useState } from 'react'
-import { addDoc, collection, serverTimestamp } from '@firebase/firestore'
+import { addDoc, collection, Timestamp } from '@firebase/firestore'
 import { db } from '../services/Firebase'
 
 function Navbar() {
@@ -26,7 +26,7 @@ function Navbar() {
     try {
       await addDoc(collection(db, 'calls'), {
         table: 21,
-        timestamp: serverTimestamp(),
+        timestamp: Timestamp.fromDate(new Date()),
       })
     } catch (e) {
       console.error('Error adding document: ', e)
