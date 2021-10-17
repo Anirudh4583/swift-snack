@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef,useState } from 'react'
 import { addCartItem } from '../services/Localstorage'
 import {
   Container,
@@ -18,6 +18,18 @@ import {
 // import data from '../utils/data'
 
 const Menu = ({ menu }) => {
+  const [searchTerm, setSearchTerm] = useState('')
+  const menuList = menu.filter((val) => {
+    if (
+      val.title.toLowerCase().includes(searchTerm.toLowerCase())
+    ) {
+      console.log(val)
+      return val
+    }
+    return []
+  })
+
+
   const inputRef = useRef()
   const submitHandler = (e) => {
     e.preventDefault()
@@ -34,12 +46,15 @@ const Menu = ({ menu }) => {
       <Form onSubmit={submitHandler}>
         <Input
           type="text"
-          ref={inputRef}
+          // ref={inputRef}
           placeholder="Please enter food's name"
+          onChange={(event) => {
+            setSearchTerm(event.target.value)
+          }}
         />
         <Search type="submit">Search</Search>
       </Form>
-      {menu.map((item) => (
+      {menuList.map((item) => (
         <Wrapper key={item.id}>
           <Image src={item.img}></Image>
           <Content>

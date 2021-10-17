@@ -1,4 +1,5 @@
 import { AiFillAlert } from 'react-icons/ai'
+import {CgProfile} from 'react-icons/cg'
 import { Link } from 'react-router-dom'
 import { IoFastFoodOutline } from 'react-icons/io5'
 import { Button, Modal } from 'react-bootstrap'
@@ -44,7 +45,9 @@ function Navbar() {
           </Link>
         </Title>
         <Link to="/auth/login">
-          <Register>Sign in</Register>
+          <Register>
+            <CgProfile size="30px"/>
+          </Register>
         </Link>
         <Right>
           <Link to="#">

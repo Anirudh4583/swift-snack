@@ -69,9 +69,9 @@ export const Title = styled.h1`
 export const Register = styled.span`
   color: grey;
   position: absolute;
-  width: 58px;
+  width: 85px;
   height: 26px;
-  left: 311px;
-  top: 30px;
+  left: 326px;
+  top: 15px;
   bottom: 40px ${mobile({ marginRight: '0px', padding: '0' })};
 `
