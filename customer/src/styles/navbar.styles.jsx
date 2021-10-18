@@ -5,15 +5,16 @@ export const btn = {
   backgroundColor: '#FA4A0C',
   borderRadius: '30px',
   top: '30px',
+  width: '150px',
   border: 'none',
-  fontSize: '20px',
+  fontSize: '19px',
   color: 'white',
   padding: '8px',
   // height: '60px'
   display: 'flex',
   textDecoration: 'underline',
   textDecorationColor: '#FA4A0C',
-  textDecorationThickness: '0.0000001px'
+  textDecorationThickness: '0.0000001px',
 }
 export const icon = {
   color: '#FA4A0C',

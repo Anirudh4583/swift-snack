@@ -35,7 +35,11 @@ const Cart = () => {
   const totalPrice = calculateTotalPrice(cart)
 
   async function handleOrder() {
-    // console.log('place order btn')
+    console.log('place order btn', {
+      table: 21,
+      timestamp: Timestamp.fromDate(new Date()),
+      dishes: [...cart],
+    })
     try {
       await addDoc(collection(db, 'orders'), {
         table: 21,
@@ -87,15 +91,14 @@ const Cart = () => {
             <b>Total Price: </b>
             <span>Rs. {totalPrice}</span>
           </Total>
-          <Link to="/order-success">
-            <TopButton
-              t="filled"
-              onClick={() => handleOrder()}
-              disabled={cart.length === 0}
-            >
-              PLACE ORDER
-            </TopButton>
-          </Link>
+
+          <TopButton
+            t="filled"
+            onClick={() => handleOrder()}
+            disabled={cart.length === 0}
+          >
+            PLACE ORDER
+          </TopButton>
         </Bottom>
       </Wrapper>
     </Container>

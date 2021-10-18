@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { db } from '../../services/Firebase'
-import { collection, getDocs } from 'firebase/firestore'
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  deleteDoc,
+} from 'firebase/firestore'
 import { AiOutlineAlert, AiOutlineCheckSquare } from 'react-icons/ai'
 const brandHead = {
   display: 'flex',
@@ -55,6 +61,16 @@ function OrderList() {
   //     console.log('The subject Name=' + order[i].dishes)
   // })
 
+  async function handleDone(table) {
+    const q = query(collection(db, 'orders'), where('table', '==', table))
+
+    const snap = await getDocs(q)
+    snap.forEach((doc) => {
+      // deleteDoc(doc)
+      console.log(doc)
+    })
+  }
+
   return (
     <div>
       <h1 style={brandHead}>
@@ -70,7 +86,10 @@ function OrderList() {
           <li>
             <div style={listHead}>
               Table: {order.table}
-              <AiOutlineCheckSquare />
+              <AiOutlineCheckSquare
+                size="24px"
+                onClick={() => handleDone(order.table)}
+              />
             </div>
             <ul style={listIn}>
               {order?.dishes.map((dish) => (
@@ -80,11 +99,7 @@ function OrderList() {
             <div style={timeLine}>
               <span>Time:</span>
               <span>
-                {(
-                  order?.timestamp.seconds / 60 / 60 +
-                  ' : ' +
-                  order?.timestamp.seconds / 60
-                ).toString()}
+                {new Date(order?.timestamp.seconds * 1000).toLocaleDateString()}
               </span>
             </div>
           </li>
